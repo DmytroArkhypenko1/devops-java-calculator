@@ -57,8 +57,8 @@ Both Java and Maven should use JDK 21. Set `JAVA_HOME` to the JDK installation i
 ## Get the project
 
 ```shell
-git clone https://github.com/DmytroArkhypenko1/devops-calculator devops-calculator
-cd devops-calculator
+git clone https://github.com/DmytroArkhypenko1/devops-java-calculator devops-java-calculator
+cd devops-java-calculator
 ```
 
 Development work will be integrated into `dev`. Reviewed releases will be merged into `main` through a separate pull request.
