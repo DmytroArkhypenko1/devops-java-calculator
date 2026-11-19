@@ -14,10 +14,10 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>adder</artifactId>
+    <artifactId>calculator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>adder</name>
-    <description>Simple addition application</description>
+    <name>calculator</name>
+    <description>Simple calculator application</description>
 
     <properties>
         <java.version>21</java.version>
