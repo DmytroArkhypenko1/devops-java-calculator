@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculatorTest {
     private static final double DELTA = 0.000000001;
-
+    // ======================== Addition Tests  ======================== 
     @Test
     void shouldAddTwoPositiveNumbers() {
         assertEquals(5.0, Calculator.add(2, 3), DELTA);
@@ -32,6 +32,8 @@ class CalculatorTest {
         assertEquals(0.3, Calculator.add(0.1, 0.2), DELTA);
     }
 
+
+    // ======================== Subtraction Tests  ======================== 
     @Test
     void shouldSubtractPositiveNumbers() {
         assertEquals(5.0, Calculator.subtract(8, 3), DELTA);
@@ -57,6 +59,7 @@ class CalculatorTest {
         assertEquals(3.3, Calculator.subtract(5.5, 2.2), DELTA);
     }
 
+    // ======================== Double Boundaries Tests  ======================== 
     @Test
     void shouldReturnPositiveInfinityOnAdditionOverflow() {
         double result = Calculator.add(
@@ -75,5 +78,36 @@ class CalculatorTest {
         );
 
         assertEquals(Double.NEGATIVE_INFINITY, result);
+    }
+
+    // ======================== Multiplication Test  ======================== 
+    @Test
+    void shouldMultiplyPositiveNumbers() {
+        assertEquals(12.0, Calculator.multiply(4, 3), DELTA);
+    }
+
+    @Test
+    void shouldMultiplyNumbersWithDifferentSigns() {
+        assertEquals(-12.0, Calculator.multiply(-4, 3), DELTA);
+    }
+
+    @Test
+    void shouldMultiplyNegativeNumbers() {
+        assertEquals(12.0, Calculator.multiply(-4, -3), DELTA);
+    }
+
+    @Test
+    void shouldMultiplyWithZeroAsFirstOperand() {
+        assertEquals(0.0, Calculator.multiply(0, 7), DELTA);
+    }
+
+    @Test
+    void shouldMultiplyWithZeroAsSecondOperand() {
+        assertEquals(0.0, Calculator.multiply(7, 0), DELTA);
+    }
+
+    @Test
+    void shouldMultiplyDecimalNumbers() {
+        assertEquals(3.0, Calculator.multiply(2.5, 1.2), DELTA);
     }
 }
