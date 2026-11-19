@@ -18,13 +18,13 @@ This project will demonstrate GitHub project planning, feature branches, pull re
 
 ## Planned features
 
-- [ ] Four arithmetic operations with whole and decimal numbers.
-- [ ] A web interface built with Thymeleaf.
-- [ ] Server-side validation of missing, invalid and non-finite input.
-- [ ] Division-by-zero and arithmetic overflow messages.
-- [ ] Preservation of submitted values and the selected operation.
-- [ ] Unit tests, HTTP validation tests and an explicit JUnit test suite.
-- [ ] Automated build and test execution through GitHub Actions.
+- Four arithmetic operations with whole and decimal numbers.
+- A web interface built with Thymeleaf.
+- Server-side validation of missing, invalid and non-finite input.
+- Division-by-zero and arithmetic overflow messages.
+- Preservation of submitted values and the selected operation.
+- Unit tests, HTTP validation tests and an explicit JUnit test suite.
+- Automated build and test execution through GitHub Actions.
 
 The calculator will use Java `double` arithmetic. Some decimal values cannot be represented exactly, so small rounding differences are expected.
 
