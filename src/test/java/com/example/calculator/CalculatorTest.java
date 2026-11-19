@@ -3,6 +3,7 @@ package com.example.calculator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CalculatorTest {
     private static final double DELTA = 0.000000001;
@@ -80,7 +81,7 @@ class CalculatorTest {
         assertEquals(Double.NEGATIVE_INFINITY, result);
     }
 
-    // ======================== Multiplication Test  ======================== 
+    // ======================== Multiplication Tests  ======================== 
     @Test
     void shouldMultiplyPositiveNumbers() {
         assertEquals(12.0, Calculator.multiply(4, 3), DELTA);
@@ -109,5 +110,71 @@ class CalculatorTest {
     @Test
     void shouldMultiplyDecimalNumbers() {
         assertEquals(3.0, Calculator.multiply(2.5, 1.2), DELTA);
+    }
+
+    // ======================== Division Tests  ======================== 
+    @Test
+    void shouldDividePositiveNumbers() {
+        assertEquals(4.0, Calculator.divide(8, 2), DELTA);
+    }
+
+    @Test
+    void shouldReturnFractionalDivisionResult() {
+        assertEquals(2.5, Calculator.divide(5, 2), DELTA);
+    }
+
+    @Test
+    void shouldDivideNegativeDivident() {
+        assertEquals(-3.0, Calculator.divide(-9, 3), DELTA);
+    }
+
+    @Test
+    void shouldDivideByNegativeDivisor() {
+        assertEquals(-3.0, Calculator.divide(9, -3), DELTA);
+    }
+
+    @Test
+    void shouldDivideNegativeNumbers() {
+        assertEquals(3.0, Calculator.divide(-9, -3), DELTA);
+    }
+
+    @Test
+    void shouldDivideZeroByNonZeroNumber() {
+        assertEquals(0.0, Calculator.divide(0, 5), DELTA);
+    }
+
+    @Test
+    void shouldDivideDecimalNumbers() {
+        assertEquals(3.0, Calculator.divide(7.5, 2.5), DELTA);
+    }
+
+    @Test
+    void shouldRejectDivisionByZero() {
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> Calculator.divide(5, 0.0)
+        );
+
+        assertEquals("Cannot divide by zero.", exception.getMessage());
+    }
+    
+    @Test
+    void shouldRejectDivisionByNegativeZero() {
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> Calculator.divide(5, -0.0)
+        );
+
+        assertEquals("Cannot divide by zero.", exception.getMessage());
+    }
+
+    @Test
+    void shouldRejectZeroDividedByZero() {
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> Calculator.divide(0, 0)
+        );
+
+        assertEquals("Cannot divide by zero.", exception.getMessage());
     }
 }
