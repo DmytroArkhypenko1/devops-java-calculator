@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 480px;
+            margin: 60px auto;
+            padding: 0 20px;
+            background: #f5f7fa;
+            color: #202938;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        input, select, button {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            font: inherit;
+        }
+
+        button {
+            margin-top: 8px;
+            background: #2457d6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .result {
+            font-size: 1.4rem;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Java Calculator</h1>
+    <p>Enter two numbers and choose an operation.</p>
+
+    <form method="post" th:action="@{/}">
+        <label for="a">First number</label>
+        <input
+            type="number"
+            id="a"
+            name="a"
+            step="any"
+            th:value="${a}"
+            required
+        >
+
+        <label for="operation">Operation</label>
+        <select id="operation" name="operation">
+            <option value="add"
+                    th:selected="${operation == 'add'}">
+                Addition (+)
+            </option>
+            <option value="subtract"
+                    th:selected="${operation == 'subtract'}">
+                Subtraction (−)
+            </option>
+            <option value="multiply"
+                    th:selected="${operation == 'multiply'}">
+                Multiplication (×)
+            </option>
+            <option value="divide"
+                    th:selected="${operation == 'divide'}">
+                Division (÷)
+            </option>
+        </select>
+
+        <label for="b">Second number</label>
+        <input
+            type="number"
+            id="b"
+            name="b"
+            step="any"
+            th:value="${b}"
+            required
+        >
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    <p class="result" th:if="${result != null}">
+        Result: <span th:text="${result}"></span>
+    </p>
+</body>
+</html>
