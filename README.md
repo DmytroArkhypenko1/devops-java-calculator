@@ -14,7 +14,7 @@ A planned Spring Boot web calculator supporting addition, subtraction, multiplic
 
 This project will demonstrate GitHub project planning, feature branches, pull requests, automated testing and continuous integration.
 
-**Current status: initial setup.** Application functionality, tests and CI will be added through the project backlog. This README will be updated as the implementation progresses.
+**Current status: implemetation of web interface.** Application functionality, tests and CI will be added through the project backlog. This README will be updated as the implementation progresses.
 
 ## Planned features
 
