@@ -44,6 +44,14 @@
             font-weight: bold;
             overflow-wrap: anywhere;
         }
+
+        .error {
+            color: #a31515;
+            background: #fff0f0;
+            border: 1px solid #e5aaaa;
+            border-radius: 6px;
+            padding: 12px;
+        }
     </style>
 </head>
 
@@ -54,10 +62,10 @@
     <form method="post" th:action="@{/}">
         <label for="a">First number</label>
         <input
-            type="number"
+            type="text"
+            inputmode="decimal"
             id="a"
             name="a"
-            step="any"
             th:value="${a}"
             required
         >
@@ -84,16 +92,22 @@
 
         <label for="b">Second number</label>
         <input
-            type="number"
+            type="text"
+            inputmode="decimal"
             id="b"
             name="b"
-            step="any"
             th:value="${b}"
             required
         >
 
         <button type="submit">Calculate</button>
     </form>
+
+    <p class="error"
+        role="alert"
+        th:if="${error != null}"
+        th:text="${error}">
+    </p>
 
     <p class="result" th:if="${result != null}">
         Result: <span th:text="${result}"></span>
