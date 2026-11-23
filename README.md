@@ -63,11 +63,33 @@ cd devops-java-calculator
 
 Development work will be integrated into `dev`. Reviewed releases will be merged into `main` through a separate pull request.
 
-## Build, run and test
+## Build
 
-Build and startup instructions will be added after the initial Maven application is implemented and verified.
+From the directory containing `pom.xml`, run:
 
-Test commands and browser usage examples will be documented as the corresponding features become available.
+```shell
+mvn clean verify
+```
+
+This cleans previous build output, compiles the application, runs tests and packages an executable Spring Boot JAR.
+
+Generated files are stored in `target/`, which is excluded from Git.
+
+## Run
+
+```shell
+mvn spring-boot:run
+```
+
+Open [http://localhost:8080](http://localhost:8080).
+
+Alternatively, after building:
+
+```shell
+java -jar target/calculator-0.0.1-SNAPSHOT.jar
+```
+
+Stop the application with `Ctrl+C`.
 
 ## Testing and continuous integration
 
