@@ -5,7 +5,7 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class CalculatorControllerTest {
 
@@ -38,18 +38,19 @@ class CalculatorControllerTest {
     }
 
     @Test
-    void shouldRejectUnsupportedOperation() {
+    void shouldDisplayErrorForUnsupportedOperation() {
         Model model = new ExtendedModelMap();
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> controller.calculate(8, 2, "unknown", model)
+        String view = controller.calculate(
+                "8", "2", "unknown", model
         );
 
+        assertEquals("index", view);
         assertEquals(
-                "Unsupported operation.",
-                exception.getMessage()
+                "Select a valid operation.",
+                model.getAttribute("error")
         );
+        assertNull(model.getAttribute("result"));
     }
 
     private void assertCalculation(
@@ -59,13 +60,14 @@ class CalculatorControllerTest {
         Model model = new ExtendedModelMap();
 
         String view = controller.calculate(
-                8.0, 2.0, operation, model
+                "8", "2", operation, model
         );
 
         assertEquals("index", view);
         assertEquals(expectedResult, model.getAttribute("result"));
-        assertEquals(8.0, model.getAttribute("a"));
-        assertEquals(2.0, model.getAttribute("b"));
+        assertEquals("8", model.getAttribute("a"));
+        assertEquals("2", model.getAttribute("b"));
         assertEquals(operation, model.getAttribute("operation"));
+        assertNull(model.getAttribute("error"));
     }
 }

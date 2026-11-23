@@ -15,26 +15,73 @@ public class CalculatorController {
 
     @PostMapping("/")
     public String calculate(
-            @RequestParam(name = "a") double a,
-            @RequestParam(name = "b") double b,
-            @RequestParam(name = "operation") String operation,
+            @RequestParam(name = "a", required = false) String a,
+            @RequestParam(name = "b", required = false) String b,
+            @RequestParam(name = "operation", required = false)
+            String operation,
             Model model) {
 
-        double result = switch (operation) {
-            case "add" -> Calculator.add(a, b);
-            case "subtract" -> Calculator.subtract(a, b);
-            case "multiply" -> Calculator.multiply(a, b);
-            case "divide" -> Calculator.divide(a, b);
-            default -> throw new IllegalArgumentException(
-                    "Unsupported operation."
-            );
-        };
+        model.asMap().remove("result");
+        model.asMap().remove("error");
 
         model.addAttribute("a", a);
         model.addAttribute("b", b);
         model.addAttribute("operation", operation);
-        model.addAttribute("result", result);
 
+        if (a == null || b == null || a.isBlank() || b.isBlank()) {
+            return showError(model, "Enter both numbers.");
+        }
+
+        double first;
+        double second;
+
+        try {
+            first = Double.parseDouble(a.trim());
+            second = Double.parseDouble(b.trim());
+        } catch (NumberFormatException exception) {
+            return showError(model, "Enter valid finite numbers.");
+        }
+
+        if (!Double.isFinite(first) || !Double.isFinite(second)) {
+            return showError(model, "Enter valid finite numbers.");
+        }
+
+        double result;
+
+        try {
+            result = switch (operation == null ? "" : operation) {
+                case "add" -> Calculator.add(first, second);
+                case "subtract" -> Calculator.subtract(first, second);
+                case "multiply" -> Calculator.multiply(first, second);
+                case "divide" -> Calculator.divide(first, second);
+                default -> throw new IllegalArgumentException(
+                        "Unsupported operation."
+                );
+            };
+        } catch (IllegalArgumentException exception) {
+            if (!"add".equals(operation)
+                    && !"subtract".equals(operation)
+                    && !"multiply".equals(operation)
+                    && !"divide".equals(operation)) {
+                return showError(model, "Select a valid operation.");
+            }
+
+            return showError(model, exception.getMessage());
+        }
+
+        if (!Double.isFinite(result)) {
+            return showError(
+                    model,
+                    "The result is outside the supported range."
+            );
+        }
+
+        model.addAttribute("result", result);
+        return "index";
+    }
+
+    private String showError(Model model, String message) {
+        model.addAttribute("error", message);
         return "index";
     }
 }
