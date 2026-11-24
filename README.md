@@ -14,9 +14,9 @@ A planned Spring Boot web calculator supporting addition, subtraction, multiplic
 
 This project will demonstrate GitHub project planning, feature branches, pull requests, automated testing and continuous integration.
 
-**Current status: implemetation of web interface.** Application functionality, tests and CI will be added through the project backlog. This README will be updated as the implementation progresses.
+**Current status: implemetation of automated Maven verification.** Application functionality, tests and CI will be added through the project backlog. This README will be updated as the implementation progresses.
 
-## Planned features
+## Features
 
 - Four arithmetic operations with whole and decimal numbers.
 - A web interface built with Thymeleaf.
@@ -28,7 +28,7 @@ This project will demonstrate GitHub project planning, feature branches, pull re
 
 The calculator will use Java `double` arithmetic. Some decimal values cannot be represented exactly, so small rounding differences are expected.
 
-## Planned technology
+## Technology
 
 - Java 21
 - Spring Boot 3.5.6
@@ -91,19 +91,67 @@ java -jar target/calculator-0.0.1-SNAPSHOT.jar
 
 Stop the application with `Ctrl+C`.
 
-## Testing and continuous integration
+## Automated tests
 
-Tests will be added alongside the arithmetic and web functionality. Planned coverage includes:
+Run the standard tests:
 
-- Positive, negative, zero and decimal operands.
-- Division by zero and floating-point overflow behavior.
-- Controller operation selection and model attributes.
-- Missing or invalid HTTP parameters.
-- Rendered error messages and escaped input.
+```shell
+mvn test
+```
 
-An explicit JUnit suite will group the test classes.
+Run one test class:
 
-GitHub Actions will be configured to build and test pull requests targeting `dev` and `main`, and pushes to those branches. The workflow will use Java 21 and Maven. Its configuration and verified commands will be documented when CI is implemented.
+```shell
+mvn test "-Dtest=CalculatorTest"
+```
+
+Run the explicit suite:
+
+```shell
+mvn test "-Dtest=CalculatorTestSuite"
+```
+
+Run the complete build verification:
+
+```shell
+mvn clean verify
+```
+
+| Test class | Responsibility |
+|---|---|
+| `CalculatorTest` | Arithmetic operations, decimal comparisons, overflow behavior and zero-divisor exceptions |
+| `CalculatorControllerTest` | Operation selection, view names and model attributes |
+| `CalculatorValidationTest` | HTTP validation, rendered errors, escaped input and recovery after errors |
+| `CalculatorTestSuite` | Explicit selection of the three test classes above |
+
+Decimal arithmetic assertions use a tolerance of `0.000000001`.
+
+Surefire does not discover the filename `CalculatorTestSuite` through its default test naming patterns, so the suite is run explicitly. The standard run and suite run execute the same tests; they do not represent two separate sets of unique tests.
+
+Maven is configured to fail when no tests are executed.
+
+Reports are available in `target/surefire-reports/`. Later test runs may overwrite earlier reports.
+
+## Continuous integration
+
+Workflow file: [`.github/workflows/maven-test-1.yml`](.github/workflows/maven-test-1.yml).
+
+The **Calculator CI** workflow contains the **test-and-build** job and runs on:
+
+- Pull requests targeting `dev` or `main`.
+- Pushes to `dev` or `main`.
+- Manual dispatch, once the workflow is available on the default branch.
+
+The job:
+
+1. Checks out the repository.
+2. Configures Temurin Java 21 and Maven dependency caching.
+3. Runs `mvn --batch-mode --no-transfer-progress clean verify`.
+4. Runs `CalculatorTestSuite` explicitly.
+
+The workflow uses read-only repository permissions and a 15-minute job timeout. A failed build or test fails the job.
+
+Open **Actions -> Calculator CI -> a run -> test-main** to inspect its output.
 
 ## Branching strategy
 
