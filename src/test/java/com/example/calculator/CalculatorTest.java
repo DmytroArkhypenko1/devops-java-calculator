@@ -10,7 +10,7 @@ class CalculatorTest {
     // ======================== Addition Tests  ======================== 
     @Test
     void shouldAddTwoPositiveNumbers() {
-        assertEquals(6.0, Calculator.add(2, 3), DELTA);
+        assertEquals(5.0, Calculator.add(2, 3), DELTA);
     }
 
     @Test
