@@ -1,22 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Adder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 480px;
+            margin: 60px auto;
+            padding: 0 20px;
+            background: #f5f7fa;
+            color: #202938;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        input, select, button {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            font: inherit;
+        }
+
+        button {
+            margin-top: 8px;
+            background: #2457d6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .result {
+            font-size: 1.4rem;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .error {
+            color: #a31515;
+            background: #fff0f0;
+            border: 1px solid #e5aaaa;
+            border-radius: 6px;
+            padding: 12px;
+        }
+    </style>
 </head>
+
 <body>
+    <h1>Java Calculator</h1>
+    <p>Enter two numbers and choose an operation.</p>
 
-<form method="post" action="/">
-    <label for="a">First number:</label>
-    <input type="number" id="a" name="a">
+    <form method="post" th:action="@{/}">
+        <label for="a">First number</label>
+        <input
+            type="text"
+            inputmode="decimal"
+            id="a"
+            name="a"
+            th:value="${a}"
+            required
+        >
 
-    <label for="b">Second number:</label>
-    <input type="number" id="b" name="b">
+        <label for="operation">Operation</label>
+        <select id="operation" name="operation">
+            <option value="add"
+                    th:selected="${operation == 'add'}">
+                Addition (+)
+            </option>
+            <option value="subtract"
+                    th:selected="${operation == 'subtract'}">
+                Subtraction (−)
+            </option>
+            <option value="multiply"
+                    th:selected="${operation == 'multiply'}">
+                Multiplication (×)
+            </option>
+            <option value="divide"
+                    th:selected="${operation == 'divide'}">
+                Division (÷)
+            </option>
+        </select>
 
-    <button type="submit">Add</button>
-</form>
+        <label for="b">Second number</label>
+        <input
+            type="text"
+            inputmode="decimal"
+            id="b"
+            name="b"
+            th:value="${b}"
+            required
+        >
 
-<p>Result: <span th:text="${result}"></span></p>
+        <button type="submit">Calculate</button>
+    </form>
 
+    <p class="error"
+        role="alert"
+        th:if="${error != null}"
+        th:text="${error}">
+    </p>
+
+    <p class="result" th:if="${result != null}">
+        Result: <span th:text="${result}"></span>
+    </p>
 </body>
 </html>

@@ -1,0 +1,13 @@
+# Maven build output
+target/
+
+# Local IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Local logs
+*.log
